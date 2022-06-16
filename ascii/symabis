@@ -1,0 +1,3 @@
+def "".equalFoldAVX2 ABI0
+def "".validAVX2 ABI0
+def "".validPrintAVX2 ABI0
