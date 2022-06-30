@@ -33,7 +33,7 @@ func MakeSlice(elemType unsafe.Pointer, len, cap int) Slice {
 }
 
 func CopySlice(elemType unsafe.Pointer, dst, src Slice) int {
-	return typedslicecopy(elemType, dst, src)
+	return typedslicecopy(elemType, dst.data, dst.len, src.data, src.len)
 }
 
 //go:linkname newarray runtime.newarray
@@ -41,4 +41,4 @@ func newarray(t unsafe.Pointer, n int) unsafe.Pointer
 
 //go:linkname typedslicecopy runtime.typedslicecopy
 //go:noescape
-func typedslicecopy(t unsafe.Pointer, dst, src Slice) int
+func typedslicecopy(t unsafe.Pointer, dst unsafe.Pointer, dstLen int, src unsafe.Pointer, srcLen int) int

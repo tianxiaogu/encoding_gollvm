@@ -12,7 +12,8 @@ func unsafe_NewArray(rtype unsafe.Pointer, length int) unsafe.Pointer
 
 //go:linkname typedslicecopy reflect.typedslicecopy
 //go:noescape
-func typedslicecopy(elemType unsafe.Pointer, dst, src slice) int
+func typedslicecopy(elemType unsafe.Pointer, dst unsafe.Pointer, dstLen int, src unsafe.Pointer, srcLen int) int
+//func typedslicecopy(elemType unsafe.Pointer, dst, src slice) int
 
 func extendSlice(t reflect.Type, s *slice, n int) slice {
 	elemTypeRef := t.Elem()
@@ -24,6 +25,6 @@ func extendSlice(t reflect.Type, s *slice, n int) slice {
 		cap:  n,
 	}
 
-	typedslicecopy(elemTypePtr, d, *s)
+	typedslicecopy(elemTypePtr, d.data, d.len, s.data, s.len)
 	return d
 }
